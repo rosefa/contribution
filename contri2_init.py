@@ -132,7 +132,7 @@ class CustomConstraint(Constraint):
     def __init__(self,k,s):
         self.k = k
         self.s = s
-        np.random.rand2 = lambda *args, dtype=np.float32: np.random.rand(*args).astype(dtype)
+        np.random.rand2 = lambda *args, dtype = np.float32: np.random.rand(*args).astype(dtype)
         f1 = np.random.rand2(s,s)
         custom_weights = np.array((f1, f1, f1))
         f2 = custom_weights.transpose(1, 2, 0)
@@ -155,8 +155,8 @@ class CustomConstraint(Constraint):
         return weights
 
 def plot_roc_curve(fper, tper,fold_var):
-    plt.plot(fper, tper, color='red', label='ROC')
-    plt.plot([0, 1], [0, 1], color='green', linestyle='--')
+    plt.plot(fper, tper, color = 'red', label = 'ROC')
+    plt.plot([0, 1], [0, 1], color = 'green', linestyle = '--')
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     plt.title('Receiver Operating Characteristic Curve')
@@ -164,8 +164,8 @@ def plot_roc_curve(fper, tper,fold_var):
     plt.savefig('courbes_ROC_'+str(fold_var)+'.png')
 
 def plot_loss(epochs, loss,val_loss):
-  plt.plot(epochs, loss, 'b', label='loss')
-  plt.plot(epochs, val_loss, 'r', label='Val loss')
+  plt.plot(epochs, loss, 'b', label = 'loss')
+  plt.plot(epochs, val_loss, 'r', label = 'Val loss')
   plt.title('Loss and Val_Loss')
   plt.xlabel('Epochs')
   plt.ylabel('Loss')
@@ -173,8 +173,8 @@ def plot_loss(epochs, loss,val_loss):
   plt.savefig('courbes_loss.png')
 
 def plot_accuracy(epochs, accuracy,val_accuracy):
-  plt.plot(epochs, accuracy, 'b', label='Accuracy')
-  plt.plot(epochs, val_accuracy, 'r', label='Val Accuracy')
+  plt.plot(epochs, accuracy, 'b', label = 'Accuracy')
+  plt.plot(epochs, val_accuracy, 'r', label = 'Val Accuracy')
   plt.title('Accuracy and Val Accuracy')
   plt.xlabel('Epochs')
   plt.ylabel('Accuracy')
@@ -192,15 +192,15 @@ def predictModel(X):
     y_pred = best_models[0].predict([testText,testImage])
     return y_pred
 
-def plot_learning_curve(epochs=30):
-    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(20, 1 * 6), dpi=100)
+def plot_learning_curve(epochs = 30):
+    fig, axes = plt.subplots(nrows = 1, ncols = 2, figsize = (20, 1 * 6), dpi = 100)
     # Classification Report curve
-    sns.lineplot(x=np.arange(1, epochs + 1), y=best_models[0].history.history['accuracy'],palette=['b'], ax=axes[0][0],label='train_accuracy')
-    sns.lineplot(x=np.arange(1, epochs + 1), y=best_models[0].history.history['val_accuracy'],palette=['r'], ax=axes[0][0],label='val_accuracy')       
+    sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['accuracy'],palette = ['b'], ax = axes[0][0],label = 'train_accuracy')
+    sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['val_accuracy'],palette = ['r'], ax = axes[0][0],label = 'val_accuracy')       
     axes[0][0].legend()
     # Loss curve
-    sns.lineplot(x=np.arange(1, epochs + 1), y=best_models[0].history.history['loss'],palette=['b'], ax=axes[0][1], label='train_loss')
-    sns.lineplot(x=np.arange(1, epochs + 1), y=best_models[0].history.history['val_loss'],palette=['r'], ax=axes[0][1], label='val_loss')
+    sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['loss'],palette = ['b'], ax = axes[0][1], label = 'train_loss')
+    sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['val_loss'],palette = ['r'], ax = axes[0][1], label = 'val_loss')
     axes[0][1].legend() 
     for j in range(2):
         axes[0][j].set_xlabel('Epoch', size=12)
@@ -213,8 +213,8 @@ def confusionMatrix(y_test,y_pred):
     cm_df = pd.DataFrame(cm)
     final_cm = cm_df
     plt.figure(figsize = (5,5))
-    sns.heatmap(final_cm, annot = True,cmap="YlGnBu",cbar=False,fmt='d')
-    plt.title('Confusion matrix', y=1.1)
+    sns.heatmap(final_cm, annot = True,cmap = "YlGnBu",cbar = False,fmt = 'd')
+    plt.title('Confusion matrix', y = 1.1)
     plt.ylabel('Actual class')
     plt.xlabel('Prediction class')
     plt.savefig('ConfusionMatrice.png')
@@ -225,11 +225,11 @@ def plotCurve(y_test,y_pred):
     fpr, tpr, _ = metrics.roc_curve(y_test, y_pred)
     auc = metrics.roc_auc_score(y_test, y_pred)
     #create ROC curve
-    plt.plot(fpr,tpr,color='red',label="AUC="+str(auc))
-    plt.plot([0, 1], [0, 1], color='green')
+    plt.plot(fpr,tpr,color='red',label = "AUC = "+str(auc))
+    plt.plot([0, 1], [0, 1], color = 'green')
     plt.ylabel('True Positive Rate')
     plt.xlabel('False Positive Rate')
-    plt.legend(loc=4)
+    plt.legend(loc = 4)
     plt.savefig('ROC_Curve.png')
     plt.show()
 ################# FIN DEFINTION DES FONCTIONS ##########
@@ -238,8 +238,8 @@ dfTrain = pd.read_csv('data_nettoyerTrain.csv')
 dfTest = pd.read_csv('data_nettoyerTest.csv')
 
 ################ IMAGES INSERTION ################
-dataImageDev = pd.DataFrame(columns=['nomImage','image','label'])
-dataImageTest = pd.DataFrame(columns=['nomImage','image','label'])
+dataImageDev = pd.DataFrame(columns = ['nomImage','image','label'])
+dataImageTest = pd.DataFrame(columns = ['nomImage','image','label'])
 
 textListe = []
 imageListe = []
@@ -256,7 +256,7 @@ while i < len(repDev):
     imgResize = cv.resize(img2, (224,224))
     chemin= repDev[i].split("/")
     imgName = chemin[len(chemin)-1]
-    imgName=imgName.replace(" ", "")
+    imgName = imgName.replace(" ", "")
     nb = len(imgName)-4
     dataImageDev.loc[i] = [imgName[:nb],imgResize,0]
   except:
@@ -265,50 +265,50 @@ while i < len(repDev):
 
 dataImageTextDev = pd.DataFrame(columns=['text','nomImage','image','label'])
 dataImageTextTest = pd.DataFrame(columns=['text','nomImage','image','label'])
-imageListe=[]
-labelImage=[]
-textListe=[]
+imageListe = []
+labelImage = []
+textListe = []
 k=0
 j=0
 i=0
 while i <len(dfTrain):
-  #name=dataOtre.loc[i,'imageId(s)']
+  #name = dataOtre.loc[i,'imageId(s)']
   name = dfTrain['imageId(s)'][i]
-  trouver=0
+  trouver = 0
   for index, valeur in dataImageDev['nomImage'].items():
     if(name == valeur):
-      trouver=1
+      trouver = 1
       tweetClean = dfTrain['tweetText'][i]
-      dataImageTextDev.loc[k]=[str(tweetClean),name,dataImageDev['image'][index],dfTrain['label'][i]]
-      k=k+1
-  i=i+1
+      dataImageTextDev.loc[k] = [str(tweetClean),name,dataImageDev['image'][index],dfTrain['label'][i]]
+      k = k+1
+  i = i+1
 
-i=0
+i = 0
 while i <len(dfTest):
   name = dfTest['imageId(s)'][i]
   trouver=0
   for index, valeur in dataImageDev['nomImage'].items():
     if(name == valeur):
-      trouver=1
+      trouver = 1
       tweetClean = dfTest['tweetText'][i]
-      dataImageTextTest.loc[k]=[str(tweetClean),name,dataImageDev['image'][index],dfTest['label'][i]]
+      dataImageTextTest.loc[k] = [str(tweetClean),name,dataImageDev['image'][index],dfTest['label'][i]]
       k=k+1
   i=i+1
 
 ################ FIN IMAGES INSERTION ##############
 
 ############### RESUME DU MODEL  #############
-model = fake_virtual(bert_layer, max_len=max_len)
+model = fake_virtual(bert_layer, max_len = max_len)
 model.summary()
-plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names = True)
 ############### FIN RESUME DU MODEL  #############
 
 ############# ENTRAINEMENT DU MODEL ##########
 i=0
-kf = KFold(n_splits=5, shuffle=True)
+kf = KFold(n_splits = 5, shuffle = True)
 save_dir = '/saved_models/'
 fold_var = 1
-max_len=26
+max_len = 26
 result = []
 scores_loss = []
 scores_acc = []
