@@ -672,7 +672,6 @@ def clean(tweet):
            
     # Acronyms
     tweet = re.sub(r"MH370", "Malaysia Airlines Flight 370", tweet)
-    tweet = re.sub(r"mÌ¼sica", "music", tweet)
     tweet = re.sub(r"okwx", "Oklahoma City Weather", tweet)
     tweet = re.sub(r"arwx", "Arkansas Weather", tweet)    
     tweet = re.sub(r"gawx", "Georgia Weather", tweet)  
