@@ -132,8 +132,8 @@ class CustomConstraint(Constraint):
     def __init__(self,k,s):
         self.k = k
         self.s = s
-        np.random.rand2 = lambda *args, dtype = np.float32: np.random.rand(*args).astype(dtype)
-        f1 = np.random.rand2(s,s)
+        #np.random.rand2 = lambda *args, dtype = np.float32: np.random.rand(*args).astype(dtype)
+        f1 = np.random.rand(s,s).astype('f')
         custom_weights = np.array((f1, f1, f1))
         f2 = custom_weights.transpose(1, 2, 0)
         custom_weights = np.tile(f2, (k, 1, 1))
