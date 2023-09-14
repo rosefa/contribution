@@ -5,31 +5,6 @@ from nltk.stem.wordnet import WordNetLemmatizer
 def clean(tweet): 
     myLem = WordNetLemmatizer()
     # Special characters
-    '''
-    tweet = re.sub(r"\x89Û_", "", tweet)
-    tweet = re.sub(r"\x89ÛÒ", "", tweet)
-    tweet = re.sub(r"\x89ÛÓ", "", tweet)
-    tweet = re.sub(r"\x89ÛÏWhen", "When", tweet)
-    tweet = re.sub(r"\x89ÛÏ", "", tweet)
-    tweet = re.sub(r"China\x89Ûªs", "China's", tweet)
-    tweet = re.sub(r"let\x89Ûªs", "let's", tweet)
-    tweet = re.sub(r"\x89Û÷", "", tweet)
-    tweet = re.sub(r"\x89Ûª", "", tweet)
-    tweet = re.sub(r"\x89Û\x9d", "", tweet)
-    tweet = re.sub(r"å_", "", tweet)
-    tweet = re.sub(r"\x89Û¢", "", tweet)
-    tweet = re.sub(r"\x89Û¢åÊ", "", tweet)
-    tweet = re.sub(r"fromåÊwounds", "from wounds", tweet)
-    tweet = re.sub(r"åÊ", "", tweet)
-    tweet = re.sub(r"åÈ", "", tweet)
-    tweet = re.sub(r"JapÌ_n", "Japan", tweet)    
-    tweet = re.sub(r"Ì©", "e", tweet)
-    tweet = re.sub(r"å¨", "", tweet)
-    tweet = re.sub(r"SuruÌ¤", "Suruc", tweet)
-    tweet = re.sub(r"åÇ", "", tweet)
-    tweet = re.sub(r"å£3million", "3 million", tweet)
-    tweet = re.sub(r"åÀ", "", tweet)
-    '''
     # Contractions
     tweet = re.sub(r"he's", "he is", tweet)
     tweet = re.sub(r"there's", "there is", tweet)
