@@ -5,6 +5,7 @@ from nltk.stem.wordnet import WordNetLemmatizer
 def clean(tweet): 
     myLem = WordNetLemmatizer()
     # Special characters
+    '''
     tweet = re.sub(r"\x89Û_", "", tweet)
     tweet = re.sub(r"\x89ÛÒ", "", tweet)
     tweet = re.sub(r"\x89ÛÓ", "", tweet)
@@ -28,7 +29,7 @@ def clean(tweet):
     tweet = re.sub(r"åÇ", "", tweet)
     tweet = re.sub(r"å£3million", "3 million", tweet)
     tweet = re.sub(r"åÀ", "", tweet)
-    
+    '''
     # Contractions
     tweet = re.sub(r"he's", "he is", tweet)
     tweet = re.sub(r"there's", "there is", tweet)
