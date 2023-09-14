@@ -80,7 +80,6 @@ def clean(tweet):
     tweet = re.sub(r"Haven't", "Have not", tweet)
     tweet = re.sub(r"Could've", "Could have", tweet)
     tweet = re.sub(r"youve", "you have", tweet)  
-    tweet = re.sub(r"donå«t", "do not", tweet)   
             
     # Character entity references
     tweet = re.sub(r"&gt;", ">", tweet)
