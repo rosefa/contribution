@@ -1,7 +1,7 @@
 import re
-import nltk
-nltk.download('wordnet')
-from nltk.stem.wordnet import WordNetLemmatizer
+#import nltk
+from nltk.stem import WordNetLemmatizer
+#from nltk.stem.wordnet import WordNetLemmatizer
 def clean(tweet): 
     myLem = WordNetLemmatizer()
     # Special characters
