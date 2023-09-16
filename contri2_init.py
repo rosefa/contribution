@@ -307,7 +307,7 @@ model.summary()
 ############# ENTRAINEMENT DU MODEL ##########
 i=0
 kf = KFold(n_splits = 5, shuffle = True)
-save_dir = '/saved_models/'
+save_dir = './saved_models/'
 fold_var = 1
 max_len = 26
 result = []
