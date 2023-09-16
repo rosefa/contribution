@@ -340,7 +340,7 @@ for train_indices, val_indices in kf.split(dataImageTextDev):
     valLabel = valLabel
 
     print(fold_var)
-    file_path = ./save_dir+'model_'+str(fold_var)+".hdf5"
+    file_path = save_dir+'model_'+str(fold_var)+".hdf5"
     checkpoint = tf.keras.callbacks.ModelCheckpoint(file_path, monitor='loss', verbose=0, save_best_only=True, mode='min')
     earlystopping = tf.keras.callbacks.EarlyStopping(monitor="loss", mode="min", patience=8)
     callbacks_list = [checkpoint,earlystopping]
