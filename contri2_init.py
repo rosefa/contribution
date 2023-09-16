@@ -301,7 +301,7 @@ while i <len(dfTest):
 max_len = 26
 model = fake_virtual(bert_layer, max_len = max_len)
 model.summary()
-plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names = True)
+#plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names = True)
 ############### FIN RESUME DU MODEL  #############
 
 ############# ENTRAINEMENT DU MODEL ##########
