@@ -42,7 +42,7 @@ from tensorflow.keras import layers
 from keras.layers import Bidirectional,LSTM, Add,GRU,MaxPooling1D, GlobalMaxPool1D, GlobalMaxPooling1D, Dropout,Conv1D,Embedding,Flatten, Input, Layer,GlobalAveragePooling1D,Activation,Lambda,LayerNormalization, Concatenate, Average,AlphaDropout,Reshape, multiply
 
 import contractions
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 from keras.utils import to_categorical
 from sklearn import preprocessing
 #from keras.preprocessing.text import Tokenizer
