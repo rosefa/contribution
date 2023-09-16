@@ -57,9 +57,9 @@ from sklearn.metrics import roc_curve, auc
 import spacy
 from scipy import stats
 from spacy import displacy
-nlp = spacy.load("en_core_web_sm")
+#nlp = spacy.load("en_core_web_sm")
 #import bert_tokenizer as tok
-import absl.logging
+#import absl.logging
 import tensorflow_hub as hub
 from bert import tokenization
 #absl.logging.set_verbosity(absl.logging.ERROR)
