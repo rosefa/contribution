@@ -3,7 +3,7 @@ import nltk
 import pandas as pd
 import numpy as np 
 import cv2 as cv
-from fastai.imports import *
+#from fastai.imports import *
 import os, glob
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
