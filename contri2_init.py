@@ -196,8 +196,8 @@ def plot_learning_curve(best_models):
     epochs = 30
     fig, axes = plt.subplots(nrows = 1, ncols = 2, figsize = (20, 1 * 6), dpi = 100)
     # Classification Report curve
-    sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['accuracy'],palette = ['b'], ax = axes[0][0],label = 'train_accuracy')
-    sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['val_accuracy'],palette = ['r'], ax = axes[0][0],label = 'val_accuracy')       
+    sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['acc'],palette = ['b'], ax = axes[0][0],label = 'train_accuracy')
+    sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['val_acc'],palette = ['r'], ax = axes[0][0],label = 'val_accuracy')       
     axes[0][0].legend()
     # Loss curve
     sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['loss'],palette = ['b'], ax = axes[0][1], label = 'train_loss')
@@ -345,7 +345,7 @@ for train_indices, val_indices in kf.split(dataImageTextDev):
     checkpoint = tf.keras.callbacks.ModelCheckpoint(file_path, monitor='loss', verbose=0, save_best_only=True, mode='min')
     earlystopping = tf.keras.callbacks.EarlyStopping(monitor="loss", mode="min", patience=8)
     callbacks_list = [checkpoint,earlystopping]
-    hist = model.fit(x=[trainText,trainImage],y=trainLabel,epochs=30,batch_size=70,validation_data=([valText, valImage], valLabel), callbacks=callbacks_list, verbose=1)
+    history = model.fit(x=[trainText,trainImage],y=trainLabel,epochs=30,batch_size=70,validation_data=([valText, valImage], valLabel), callbacks=callbacks_list, verbose=1)
     model.load_weights(file_path)
     score = model.evaluate([valText, valImage],valLabel, verbose=0)
     scores_loss.append(score[0])
