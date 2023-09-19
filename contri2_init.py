@@ -192,7 +192,8 @@ def predictModel(X):
     y_pred = best_models[0].predict([testText,testImage])
     return y_pred
 
-def plot_learning_curve(epochs = 30):
+def plot_learning_curve(best_models):
+    epochs = 30
     fig, axes = plt.subplots(nrows = 1, ncols = 2, figsize = (20, 1 * 6), dpi = 100)
     # Classification Report curve
     sns.lineplot(x = np.arange(1, epochs + 1), y = best_models[0].history.history['accuracy'],palette = ['b'], ax = axes[0][0],label = 'train_accuracy')
@@ -371,7 +372,7 @@ testLabel = to_categorical(testLabel)
 testLabel = testLabel
 
 ############ DEBUT GRAPHES ET COURBES #############
-plot_learning_curve()
+plot_learning_curve(best_models)
 y_pred = predictModel([testText,testImage])
 confusionMatrix(testLabel,y_pred)
 plotCurve(testLabel,y_pred)
