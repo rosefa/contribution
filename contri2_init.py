@@ -14,8 +14,6 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split, KFold, StratifiedKFold
 from sklearn.metrics import classification_report, confusion_matrix
-from tensorflow.keras.constraints import Constraint
-
 import tensorflow as tf
 tf.gfile = tf.io.gfile
 import tensorflow_hub as hub
