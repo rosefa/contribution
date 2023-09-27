@@ -37,38 +37,43 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras import layers
 from keras.layers import Bidirectional,LSTM, Add,GRU,MaxPooling1D, GlobalMaxPool1D, GlobalMaxPooling1D, Dropout,Conv1D,Embedding,Flatten, Input, Layer,GlobalAveragePooling1D,Activation,Lambda,LayerNormalization, Concatenate, Average,AlphaDropout,Reshape, multiply
 
-import contractions
+#import contractions
 #from bs4 import BeautifulSoup
 from keras.utils import to_categorical
 from sklearn import preprocessing
 #from keras.preprocessing.text import Tokenizer
 from nltk import word_tokenize, sent_tokenize, pos_tag
 from nltk.corpus import stopwords
-from nltk.stem import LancasterStemmer, WordNetLemmatizer,PorterStemmer
+#from nltk.stem import LancasterStemmer, WordNetLemmatizer,PorterStemmer
 from tensorflow.keras.layers import TextVectorization
-import tqdm
+#import tqdm
 from sklearn.model_selection import GridSearchCV
 from scikeras.wrappers import KerasClassifier
 from sklearn.metrics import roc_curve, auc
 import spacy
-from scipy import stats
-from spacy import displacy
+#from scipy import stats
+#from spacy import displacy
 #nlp = spacy.load("en_core_web_sm")
 #import bert_tokenizer as tok
 #import absl.logging
 import tensorflow_hub as hub
 from bert import tokenization
-#absl.logging.set_verbosity(absl.logging.ERROR)
+
+import transformers
+from transformers import TFBertModel,BertModel,BertTokenizerFast, BertTokenizer
 
 ################# DEBUT..................DEFINITION DES FONCTIONS ###################
+bert_model = TFBertModel.from_pretrained('bert-base-uncased')
+tokenizer = bert_model.tokenizer
+
+'''
 best_models = []
 m_url = 'https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/2'
 bert_layer = hub.KerasLayer(m_url, trainable=True)
-
 vocab_file = bert_layer.resolved_object.vocab_file.asset_path.numpy()
 do_lower_case = bert_layer.resolved_object.do_lower_case.numpy()
 tokenizer = tokenization.FullTokenizer(vocab_file, do_lower_case)
-
+'''
 def bert_encode(texts, tokenizer, max_len=512):
     all_tokens = []
     all_masks = []
@@ -86,19 +91,10 @@ def bert_encode(texts, tokenizer, max_len=512):
         all_masks.append(pad_masks)
         all_segments.append(segment_ids)
     return np.array(all_tokens), np.array(all_masks), np.array(all_segments)
-def fake_virtual(bert_layer, max_len=512):
-    input_word_ids = tf.keras.Input(shape=(max_len,), dtype=tf.int32, name="input_word_ids")
-    input_mask = tf.keras.Input(shape=(max_len,), dtype=tf.int32, name="input_mask")
-    segment_ids = tf.keras.Input(shape=(max_len,), dtype=tf.int32, name="segment_ids")
-
-    pooled_output, sequence_output = bert_layer([input_word_ids, input_mask, segment_ids])
-
-    clf_output = sequence_output[:, 0, :]
-
-    #input1 = Input(shape=(100,))
-    #embedding_layer = Embedding(len(word_index)+1,100,embeddings_initializer=keras.initializers.Constant(embedding_matrix),input_length=100,trainable=False)(input1)
-    #model1 = Bidirectional(LSTM(32))(embedding_layer)
-    model1 = Bidirectional(LSTM(32))(sequence_output)
+def fake_virtual(max_len=512):
+    input_ids = Input(shape=(max_len,), dtype=tf.int32, name='input_ids')
+    bert_output = bert_model(input_ids)[0]
+    model1 = Bidirectional(LSTM(32))(bert_output)
     model1 = Dense(64, activation='softmax')(model1)
 
     input2 = Input(shape=(224,224,3))
@@ -114,9 +110,7 @@ def fake_virtual(bert_layer, max_len=512):
 
     outFinal = tf.keras.layers.Add()([model1, model2])
     final_model_output = Dense(2, activation='softmax')(outFinal)
-    #input1=[input_word_ids, input_mask, segment_ids]
-    final_model = Model(inputs=[input_word_ids, input_mask, segment_ids, input2], outputs=final_model_output)
-    #final_model.compile(optimizer="adam",loss="sparse_categorical_crossentropy",metrics=["accuracy", f1_m])
+    final_model = Model(inputs=[input_ids, input2], outputs=final_model_output)
     final_model.compile(loss=tf.keras.losses.BinaryCrossentropy(), optimizer='adam', metrics=['accuracy', tf.keras.metrics.Precision(name='precision'), tf.keras.metrics.Recall(name='rappel')])
     return final_model
 
@@ -296,9 +290,7 @@ while i <len(dfTest):
 
 ############### RESUME DU MODEL  #############
 max_len = 26
-model = fake_virtual(bert_layer, max_len = max_len)
-model.summary()
-#plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names = True)
+model = fake_virtual( max_len = max_len)
 ############### FIN RESUME DU MODEL  #############
 
 ############# ENTRAINEMENT DU MODEL ##########
@@ -319,7 +311,8 @@ for train_indices, val_indices in kf.split(dataImageTextDev):
     val = dataImageTextDev.iloc[val_indices]
     label = preprocessing.LabelEncoder()
 
-    trainText = bert_encode(train['text'], tokenizer, max_len=max_len)
+    trainText = train['text']
+    
     trainImage = train['image']
     trainImage = trainImage.to_numpy()
     # Conversion
@@ -328,7 +321,7 @@ for train_indices, val_indices in kf.split(dataImageTextDev):
     trainLabel = to_categorical(trainLabel)
     labels = label.classes_
 
-    valText = bert_encode(val['text'], tokenizer, max_len=max_len)
+    valText = val['text']
     valImage = val['image']
     valImage = valImage.to_numpy()
     valImage = np.array([val for val in valImage])
