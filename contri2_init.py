@@ -20,7 +20,6 @@ import tensorflow_hub as hub
 from tensorflow import keras
 import keras.utils as image
 from keras.preprocessing.image import ImageDataGenerator
-from keras.utils.vis_utils import plot_model
 from keras import backend as K
 from keras.models import load_model
 
